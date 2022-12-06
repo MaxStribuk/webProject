@@ -1,0 +1,10 @@
+Adventure
+Biography
+Drama
+Crime
+Mystery
+Action
+Thriller
+Animation
+Musical
+Fantasy
