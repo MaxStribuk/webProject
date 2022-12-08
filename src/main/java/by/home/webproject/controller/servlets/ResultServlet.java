@@ -1,6 +1,8 @@
-package by.home.webproject.servlets;
+package by.home.webproject.controller.servlets;
 
-import by.home.webproject.controller.VoiceControllerImpl;
+import by.home.webproject.dto.StatisticsDTO;
+import by.home.webproject.service.api.IStatisticsService;
+import by.home.webproject.service.fabrics.StatisticsServiceSingleton;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,20 +14,17 @@ import java.io.PrintWriter;
 @WebServlet(name = "ResultServlet", urlPatterns = "/result")
 public class ResultServlet extends HttpServlet {
 
+    IStatisticsService service;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         req.setCharacterEncoding("UTF-8");
         resp.setContentType("text/html; charset=UTF-8");
-        VoiceControllerImpl voiceController = VoiceControllerImpl.getInstance();
-        String message = voiceController.getResult(true);
+        service = StatisticsServiceSingleton.getInstance();
+        StatisticsDTO statistics = service.getStatistics();
         try (PrintWriter writer = resp.getWriter()) {
-            writer.write(message);
+            writer.write(statistics.toString());
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        doGet(req, resp);
     }
 }
